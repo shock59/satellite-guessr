@@ -30,7 +30,9 @@
     });
 
     const point = randomLandPoint().geometry.coordinates;
-    new Marker().setLngLat(point as [number, number]).addTo(map);
+    new Marker({ color: "#ff0000" })
+      .setLngLat(point as [number, number])
+      .addTo(map);
   });
 </script>
 
