@@ -26,6 +26,7 @@
       style: sentinelStyle,
       center: [0, 0],
       zoom: 1,
+      maxZoom: 19,
       attributionControl: {
         compact: false,
         customAttribution:
