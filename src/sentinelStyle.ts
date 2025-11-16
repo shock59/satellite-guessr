@@ -9,8 +9,6 @@ const sentinelStyle: StyleSpecification = {
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
       ],
       tileSize: 256,
-      attribution:
-        'Map tiles &copy; <a href="https://www.esri.com/">Esri</a> | Images from Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
     },
   },
   layers: [

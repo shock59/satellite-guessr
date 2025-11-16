@@ -1,12 +1,15 @@
 <script lang="ts">
-  import maplibregl, { Marker } from "maplibre-gl";
+  import maplibregl from "maplibre-gl";
   import { onMount } from "svelte";
   import sentinelStyle from "./sentinelStyle";
   import { randomPoint } from "@turf/random";
   import pointsWithinPolygon from "@turf/points-within-polygon";
   import land from "./land";
+  import type { Position } from "geojson";
+  import PreviewMap from "./PreviewMap.svelte";
 
   let mapContainer: HTMLElement;
+  let previewMapPoint: Position | undefined = $state();
 
   function randomLandPoint() {
     const point = randomPoint().features[0];
@@ -25,19 +28,20 @@
       zoom: 1,
       attributionControl: {
         compact: false,
-        customAttribution: '<a href="https://maplibre.org/">MapLibre</a>',
+        customAttribution:
+          '<a href="https://maplibre.org/">MapLibre</a> | Map tiles &copy; <a href="https://www.esri.com/">Esri</a> | Images from Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
       },
     });
-
-    const point = randomLandPoint().geometry.coordinates;
-    new Marker({ color: "#ff0000" })
-      .setLngLat(point as [number, number])
-      .addTo(map);
+    previewMapPoint = randomLandPoint().geometry.coordinates;
   });
 </script>
 
 <main>
   <div bind:this={mapContainer} id="map-container"></div>
+
+  {#if previewMapPoint != undefined}
+    <PreviewMap center={previewMapPoint as [number, number]} />
+  {/if}
 </main>
 
 <style>
