@@ -4,7 +4,6 @@
   import pointsWithinPolygon from "@turf/points-within-polygon";
   import land from "./land";
   import type { Position } from "geojson";
-  import PreviewMap from "./maps/PreviewMap.svelte";
   import GuessMap from "./maps/GuessMap.svelte";
   import PreviewWindow from "./PreviewWindow.svelte";
 
