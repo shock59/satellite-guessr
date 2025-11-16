@@ -1,7 +1,7 @@
 <script lang="ts">
   import maplibregl, { type LngLatLike } from "maplibre-gl";
   import { onMount } from "svelte";
-  import esriStyle from "./esriStyle";
+  import esriStyle from "../esriStyle";
 
   let { center }: { center: LngLatLike } = $props();
   let mapContainer: HTMLElement;

@@ -1,14 +1,12 @@
 <script lang="ts">
-  import maplibregl from "maplibre-gl";
   import { onMount } from "svelte";
-  import esriStyle from "./esriStyle";
   import { randomPoint } from "@turf/random";
   import pointsWithinPolygon from "@turf/points-within-polygon";
   import land from "./land";
   import type { Position } from "geojson";
-  import PreviewMap from "./PreviewMap.svelte";
+  import PreviewMap from "./maps/PreviewMap.svelte";
+  import GuessMap from "./maps/GuessMap.svelte";
 
-  let mapContainer: HTMLElement;
   let previewMapPoint: Position | undefined = $state();
 
   function randomLandPoint() {
@@ -21,24 +19,12 @@
   }
 
   onMount(() => {
-    const map = new maplibregl.Map({
-      container: mapContainer,
-      style: esriStyle,
-      center: [0, 0],
-      zoom: 1,
-      maxZoom: 19,
-      attributionControl: {
-        compact: false,
-        customAttribution:
-          '<a href="https://maplibre.org/">MapLibre</a> | Map tiles &copy; <a href="https://www.esri.com/">Esri</a> | Images from Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-      },
-    });
     previewMapPoint = randomLandPoint().geometry.coordinates;
   });
 </script>
 
 <main>
-  <div bind:this={mapContainer} id="map-container"></div>
+  <GuessMap />
 
   {#if previewMapPoint != undefined}
     <PreviewMap center={previewMapPoint as [number, number]} />
@@ -49,10 +35,5 @@
   main {
     width: 100vw;
     height: 100vh;
-  }
-
-  #map-container {
-    width: 100%;
-    height: 100%;
   }
 </style>
