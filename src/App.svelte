@@ -1,15 +1,20 @@
 <script lang="ts">
   import maplibregl from "maplibre-gl";
   import { onMount } from "svelte";
+  import sentinelStyle from "./sentinelStyle";
 
   let mapContainer: HTMLElement;
 
   onMount(() => {
     const map = new maplibregl.Map({
       container: mapContainer,
-      style: "https://demotiles.maplibre.org/globe.json",
+      style: sentinelStyle,
       center: [0, 0],
       zoom: 1,
+      attributionControl: {
+        compact: false,
+        customAttribution: '<a href="https://maplibre.org/">MapLibre</a>',
+      },
     });
   });
 </script>
