@@ -22,13 +22,10 @@
 
 <style>
   #map-container {
-    width: 256px;
+    width: 100%;
     height: 256px;
 
-    position: absolute;
-    top: 32px;
-    left: 32px;
-
-    border: 1px solid black;
+    border-top: var(--border-style);
+    border-bottom: var(--border-style);
   }
 </style>

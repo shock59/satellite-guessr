@@ -6,6 +6,7 @@
   import type { Position } from "geojson";
   import PreviewMap from "./maps/PreviewMap.svelte";
   import GuessMap from "./maps/GuessMap.svelte";
+  import PreviewWindow from "./PreviewWindow.svelte";
 
   let previewMapPoint: Position | undefined = $state();
 
@@ -27,7 +28,7 @@
   <GuessMap />
 
   {#if previewMapPoint != undefined}
-    <PreviewMap center={previewMapPoint as [number, number]} />
+    <PreviewWindow center={previewMapPoint as [number, number]} />
   {/if}
 </main>
 

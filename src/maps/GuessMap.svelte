@@ -36,6 +36,8 @@
         guessMarker.setLngLat(event.lngLat);
       }
     });
+
+    map.getContainer().style.fontFamily = "inherit";
   });
 </script>
 
