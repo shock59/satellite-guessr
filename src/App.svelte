@@ -35,5 +35,6 @@
   main {
     width: 100vw;
     height: 100vh;
+    background: #1b1b1b;
   }
 </style>
