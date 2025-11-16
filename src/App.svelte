@@ -1,7 +1,7 @@
 <script lang="ts">
   import maplibregl from "maplibre-gl";
   import { onMount } from "svelte";
-  import sentinelStyle from "./sentinelStyle";
+  import esriStyle from "./esriStyle";
   import { randomPoint } from "@turf/random";
   import pointsWithinPolygon from "@turf/points-within-polygon";
   import land from "./land";
@@ -23,7 +23,7 @@
   onMount(() => {
     const map = new maplibregl.Map({
       container: mapContainer,
-      style: sentinelStyle,
+      style: esriStyle,
       center: [0, 0],
       zoom: 1,
       maxZoom: 19,

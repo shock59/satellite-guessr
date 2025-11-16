@@ -1,6 +1,6 @@
 import { type StyleSpecification } from "maplibre-gl";
 
-const sentinelStyle: StyleSpecification = {
+const esriStyle: StyleSpecification = {
   version: 8,
   sources: {
     "raster-tiles": {
@@ -21,4 +21,4 @@ const sentinelStyle: StyleSpecification = {
     },
   ],
 };
-export default sentinelStyle;
+export default esriStyle;

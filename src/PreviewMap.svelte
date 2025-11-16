@@ -1,7 +1,7 @@
 <script lang="ts">
   import maplibregl, { type LngLatLike } from "maplibre-gl";
   import { onMount } from "svelte";
-  import sentinelStyle from "./sentinelStyle";
+  import esriStyle from "./esriStyle";
 
   let { center }: { center: LngLatLike } = $props();
   let mapContainer: HTMLElement;
@@ -9,7 +9,7 @@
   onMount(() => {
     const map = new maplibregl.Map({
       container: mapContainer,
-      style: sentinelStyle,
+      style: esriStyle,
       center: center,
       zoom: 5,
       attributionControl: {},
