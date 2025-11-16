@@ -3,8 +3,19 @@
   import { onMount } from "svelte";
   import sentinelStyle from "./sentinelStyle";
   import { randomPoint } from "@turf/random";
+  import pointsWithinPolygon from "@turf/points-within-polygon";
+  import land from "./land";
 
   let mapContainer: HTMLElement;
+
+  function randomLandPoint() {
+    const point = randomPoint().features[0];
+    if (pointsWithinPolygon(point, land).features.length > 0) {
+      return point;
+    } else {
+      return randomLandPoint();
+    }
+  }
 
   onMount(() => {
     const map = new maplibregl.Map({
@@ -18,7 +29,7 @@
       },
     });
 
-    const point = randomPoint().features[0].geometry.coordinates;
+    const point = randomLandPoint().geometry.coordinates;
     new Marker().setLngLat(point as [number, number]).addTo(map);
   });
 </script>
