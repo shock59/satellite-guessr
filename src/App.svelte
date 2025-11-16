@@ -1,7 +1,8 @@
 <script lang="ts">
-  import maplibregl from "maplibre-gl";
+  import maplibregl, { Marker } from "maplibre-gl";
   import { onMount } from "svelte";
   import sentinelStyle from "./sentinelStyle";
+  import { randomPoint } from "@turf/random";
 
   let mapContainer: HTMLElement;
 
@@ -16,6 +17,9 @@
         customAttribution: '<a href="https://maplibre.org/">MapLibre</a>',
       },
     });
+
+    const point = randomPoint().features[0].geometry.coordinates;
+    new Marker().setLngLat(point as [number, number]).addTo(map);
   });
 </script>
 
