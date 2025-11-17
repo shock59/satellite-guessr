@@ -8,6 +8,7 @@
   import { onMount } from "svelte";
   import esriStyle from "../esriStyle";
   import type { Feature, LineString } from "geojson";
+  import bbox from "@turf/bbox";
 
   let {
     updateGuessPosition,
@@ -55,11 +56,9 @@
       },
     });
 
-    const bbox: [LngLatLike, LngLatLike] =
-      LngLat.convert(guessPosition).lat > LngLat.convert(answerPoint).lat
-        ? [guessPosition, answerPoint]
-        : [answerPoint, guessPosition];
-    map.fitBounds(bbox, { padding: 128 });
+    map.fitBounds(bbox(line) as [number, number, number, number], {
+      padding: 128,
+    });
   }
 
   onMount(() => {
@@ -67,7 +66,7 @@
       container: mapContainer,
       style: esriStyle,
       center: [0, 0],
-      zoom: 1,
+      zoom: 2,
       maxZoom: 19,
       attributionControl: {
         compact: false,
