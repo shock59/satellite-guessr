@@ -33,7 +33,7 @@
     Your guess was {distanceKm}km ({distanceMiles} miles) away
   </div>
   <div id="footer">
-    <button>Play again</button>
+    <button onclick={() => location.reload()}>Play again</button>
   </div>
 </div>
 
