@@ -7,8 +7,9 @@
   import GuessMap from "./maps/GuessMap.svelte";
   import PreviewWindow from "./PreviewWindow.svelte";
   import type { LngLatLike } from "maplibre-gl";
+  import ResultWindow from "./ResultWindow.svelte";
 
-  let answerPoint: Position | undefined = $state();
+  let answerPoint: [number, number] | undefined = $state();
   let guessPosition: LngLatLike | undefined = $state();
   let guessed: boolean = $state(false);
 
@@ -29,11 +30,11 @@
 
   function submitGuess() {
     guessed = true;
-    guessMap.showAnswer(guessPosition!, answerPoint as [number, number]);
+    guessMap.showAnswer(guessPosition!, answerPoint!);
   }
 
   onMount(() => {
-    answerPoint = randomLandPoint().geometry.coordinates;
+    answerPoint = randomLandPoint().geometry.coordinates as [number, number];
   });
 </script>
 
@@ -42,10 +43,12 @@
 
   {#if !guessed && answerPoint != undefined}
     <PreviewWindow
-      center={answerPoint as [number, number]}
+      center={answerPoint}
       guessPositionSet={guessPosition != undefined}
       {submitGuess}
     />
+  {:else if guessed && guessPosition && answerPoint}
+    <ResultWindow {guessPosition} {answerPoint} />
   {/if}
 </main>
 
