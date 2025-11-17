@@ -8,7 +8,7 @@
   import PreviewWindow from "./PreviewWindow.svelte";
   import type { LngLatLike } from "maplibre-gl";
 
-  let previewMapPoint: Position | undefined = $state();
+  let answerPoint: Position | undefined = $state();
   let guessPosition: LngLatLike | undefined = $state();
 
   function randomLandPoint() {
@@ -27,16 +27,16 @@
   function submitGuess() {}
 
   onMount(() => {
-    previewMapPoint = randomLandPoint().geometry.coordinates;
+    answerPoint = randomLandPoint().geometry.coordinates;
   });
 </script>
 
 <main>
   <GuessMap {updateGuessPosition} />
 
-  {#if previewMapPoint != undefined}
+  {#if answerPoint != undefined}
     <PreviewWindow
-      center={previewMapPoint as [number, number]}
+      center={answerPoint as [number, number]}
       guessPositionSet={guessPosition != undefined}
       {submitGuess}
     />
