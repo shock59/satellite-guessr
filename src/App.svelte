@@ -10,6 +10,9 @@
 
   let answerPoint: Position | undefined = $state();
   let guessPosition: LngLatLike | undefined = $state();
+  let guessed: boolean = $state(false);
+
+  let guessMap: GuessMap;
 
   function randomLandPoint() {
     const point = randomPoint().features[0];
@@ -24,7 +27,10 @@
     guessPosition = newPosition;
   }
 
-  function submitGuess() {}
+  function submitGuess() {
+    guessed = true;
+    guessMap.showAnswer(guessPosition!, answerPoint as [number, number]);
+  }
 
   onMount(() => {
     answerPoint = randomLandPoint().geometry.coordinates;
@@ -32,9 +38,9 @@
 </script>
 
 <main>
-  <GuessMap {updateGuessPosition} />
+  <GuessMap bind:this={guessMap} {updateGuessPosition} />
 
-  {#if answerPoint != undefined}
+  {#if !guessed && answerPoint != undefined}
     <PreviewWindow
       center={answerPoint as [number, number]}
       guessPositionSet={guessPosition != undefined}

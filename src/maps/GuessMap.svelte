@@ -1,16 +1,69 @@
 <script lang="ts">
-  import maplibregl, { Marker, type LngLatLike } from "maplibre-gl";
+  import maplibregl, {
+    LngLat,
+    Map,
+    Marker,
+    type LngLatLike,
+  } from "maplibre-gl";
   import { onMount } from "svelte";
   import esriStyle from "../esriStyle";
+  import type { Feature, LineString } from "geojson";
 
   let {
     updateGuessPosition,
-  }: { updateGuessPosition: (newPosition: LngLatLike) => unknown } = $props();
+  }: {
+    updateGuessPosition: (newPosition: LngLatLike) => unknown;
+  } = $props();
 
+  let map: Map;
   let mapContainer: HTMLElement;
 
+  export function showAnswer(
+    guessPosition: LngLatLike,
+    answerPoint: LngLatLike
+  ) {
+    new Marker({ color: "#48a248", scale: 1.2 })
+      .setLngLat(answerPoint)
+      .addTo(map);
+
+    const line: Feature<LineString> = {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "LineString",
+        coordinates: [
+          LngLat.convert(guessPosition).toArray(),
+          LngLat.convert(answerPoint).toArray(),
+        ],
+      },
+    };
+    map.addSource("answerLine", {
+      type: "geojson",
+      data: line,
+    });
+    map.addLayer({
+      id: "answerLine",
+      type: "line",
+      source: "answerLine",
+      layout: {
+        "line-join": "round",
+        "line-cap": "round",
+      },
+      paint: {
+        "line-color": "#e24848",
+        "line-width": 8,
+      },
+    });
+
+    const bbox: [LngLatLike, LngLatLike] =
+      LngLat.convert(guessPosition).lat > LngLat.convert(answerPoint).lat
+        ? [guessPosition, answerPoint]
+        : [answerPoint, guessPosition];
+    map.fitBounds(bbox, { padding: 128 });
+  }
+
   onMount(() => {
-    const map = new maplibregl.Map({
+    map = new maplibregl.Map({
       container: mapContainer,
       style: esriStyle,
       center: [0, 0],
@@ -34,7 +87,9 @@
     let guessMarker: Marker | undefined = undefined;
     map.on("click", (event) => {
       if (!guessMarker) {
-        guessMarker = new Marker().setLngLat(event.lngLat).addTo(map);
+        guessMarker = new Marker({ color: "#e24848", scale: 1.2 })
+          .setLngLat(event.lngLat)
+          .addTo(map);
         guessMarker.getElement().style.cursor = "pointer";
       } else {
         guessMarker.setLngLat(event.lngLat);
