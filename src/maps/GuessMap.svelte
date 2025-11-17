@@ -1,7 +1,11 @@
 <script lang="ts">
-  import maplibregl, { Marker } from "maplibre-gl";
+  import maplibregl, { Marker, type LngLatLike } from "maplibre-gl";
   import { onMount } from "svelte";
   import esriStyle from "../esriStyle";
+
+  let {
+    updateGuessPosition,
+  }: { updateGuessPosition: (newPosition: LngLatLike) => unknown } = $props();
 
   let mapContainer: HTMLElement;
 
@@ -35,6 +39,7 @@
       } else {
         guessMarker.setLngLat(event.lngLat);
       }
+      updateGuessPosition(event.lngLat);
     });
 
     map.getContainer().style.fontFamily = "inherit";

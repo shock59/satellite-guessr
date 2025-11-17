@@ -2,13 +2,23 @@
   import type { LngLatLike } from "maplibre-gl";
   import PreviewMap from "./maps/PreviewMap.svelte";
 
-  let { center }: { center: LngLatLike } = $props();
+  let {
+    center,
+    guessPositionSet,
+    submitGuess,
+  }: {
+    center: LngLatLike;
+    guessPositionSet: boolean;
+    submitGuess: () => unknown;
+  } = $props();
 </script>
 
 <div id="preview-window">
   <div id="header">Find this location</div>
   <PreviewMap {center} />
-  <div id="footer"><button>Guess</button></div>
+  <div id="footer">
+    <button onclick={submitGuess} disabled={!guessPositionSet}>Guess</button>
+  </div>
 </div>
 
 <style>
@@ -53,10 +63,15 @@
 
     cursor: pointer;
 
-    transition: 200ms background;
+    transition: 200ms;
   }
 
-  #footer button:hover {
+  #footer button:hover:not(:disabled) {
     background: #328a3b;
+  }
+
+  #footer button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 </style>

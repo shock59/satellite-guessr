@@ -6,8 +6,10 @@
   import type { Position } from "geojson";
   import GuessMap from "./maps/GuessMap.svelte";
   import PreviewWindow from "./PreviewWindow.svelte";
+  import type { LngLatLike } from "maplibre-gl";
 
   let previewMapPoint: Position | undefined = $state();
+  let guessPosition: LngLatLike | undefined = $state();
 
   function randomLandPoint() {
     const point = randomPoint().features[0];
@@ -18,16 +20,26 @@
     }
   }
 
+  function updateGuessPosition(newPosition: LngLatLike) {
+    guessPosition = newPosition;
+  }
+
+  function submitGuess() {}
+
   onMount(() => {
     previewMapPoint = randomLandPoint().geometry.coordinates;
   });
 </script>
 
 <main>
-  <GuessMap />
+  <GuessMap {updateGuessPosition} />
 
   {#if previewMapPoint != undefined}
-    <PreviewWindow center={previewMapPoint as [number, number]} />
+    <PreviewWindow
+      center={previewMapPoint as [number, number]}
+      guessPositionSet={guessPosition != undefined}
+      {submitGuess}
+    />
   {/if}
 </main>
 
