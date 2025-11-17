@@ -56,6 +56,7 @@
   main {
     width: 100vw;
     height: 100vh;
-    background: #1b1b1b;
+    background: linear-gradient(rgba(0, 0, 0, 0.65)),
+      url("https://science.nasa.gov/wp-content/uploads/2023/04/c1-wfc3-jpg.webp?resize=300,235");
   }
 </style>

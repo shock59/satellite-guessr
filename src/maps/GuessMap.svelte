@@ -66,7 +66,7 @@
       container: mapContainer,
       style: esriStyle,
       center: [0, 0],
-      zoom: 2,
+      zoom: 3,
       maxZoom: 19,
       attributionControl: {
         compact: false,

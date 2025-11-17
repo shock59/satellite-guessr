@@ -20,5 +20,8 @@ const esriStyle: StyleSpecification = {
       maxzoom: 19,
     },
   ],
+  projection: {
+    type: "globe",
+  },
 };
 export default esriStyle;
