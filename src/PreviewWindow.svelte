@@ -11,13 +11,26 @@
     guessPositionSet: boolean;
     submitGuess: () => unknown;
   } = $props();
+
+  let map: PreviewMap | undefined = $state();
+  let mapUpdate: number = $state(0);
+
+  function zoomOut() {
+    map?.zoomOut();
+    mapUpdate++;
+  }
 </script>
 
 <div id="preview-window">
   <div id="header">Find this location</div>
-  <PreviewMap {center} />
+  <PreviewMap {center} bind:this={map} />
   <div id="footer">
-    <button onclick={submitGuess} disabled={!guessPositionSet}>Guess</button>
+    {#key mapUpdate}
+      <button onclick={zoomOut} disabled={map?.getZoom() <= 3}>Zoom out</button>
+    {/key}
+    <button onclick={submitGuess} disabled={!guessPositionSet}
+      >{guessPositionSet ? "Guess" : "Click the map"}</button
+    >
   </div>
 </div>
 
@@ -45,11 +58,18 @@
   #footer {
     padding: 8px 16px;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
     text-align: center;
     font-weight: bold;
   }
 
   #footer button {
+    width: fit-content;
+
     padding: 6px 32px;
 
     color: inherit;

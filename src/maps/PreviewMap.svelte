@@ -1,17 +1,25 @@
 <script lang="ts">
-  import maplibregl, { type LngLatLike } from "maplibre-gl";
+  import maplibregl, { Map, type LngLatLike } from "maplibre-gl";
   import { onMount } from "svelte";
   import esriStyle from "../esriStyle";
 
   let { center }: { center: LngLatLike } = $props();
   let mapContainer: HTMLElement;
+  let map: Map;
+
+  export function zoomOut() {
+    map.zoomOut();
+  }
+  export function getZoom() {
+    return map.getZoom();
+  }
 
   onMount(() => {
-    const map = new maplibregl.Map({
+    map = new maplibregl.Map({
       container: mapContainer,
       style: esriStyle,
       center: center,
-      zoom: 5,
+      zoom: 6,
       attributionControl: {},
       interactive: false,
     });
